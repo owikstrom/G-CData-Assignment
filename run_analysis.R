@@ -35,7 +35,7 @@ write.csv(tidydataset, file='tidydataset.csv')
 
 # Create and save the summary dataset
 sumdataset <- tidydataset %>% group_by(subject, activity) %>% summarise_all(list(mean))
-write.csv(tidydataset, file='summary.csv')
+write.csv(sumdataset, file='summary.csv')
           
 # Cleanup
 rm(list = ls())
