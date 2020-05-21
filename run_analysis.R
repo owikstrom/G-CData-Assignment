@@ -30,12 +30,12 @@ x_reduced <- x_full[,cols]
 # Consolidate the tidy dataset with subject and activity data
 y_full$activity <-factor(y_full$V1, labels = labels$V2)
 tidydataset <- cbind(activity= y_full$activity, subject=subject_full$V1, x_reduced)
-write.csv(tidydataset, file='tidydataset.csv')
+write.csv(tidydataset, file='tidydataset.csv', row.names = FALSE)
 
 
 # Create and save the summary dataset
 sumdataset <- tidydataset %>% group_by(subject, activity) %>% summarise_all(list(mean))
-write.csv(sumdataset, file='summary.csv')
+write.csv(sumdataset, file='summary.csv', row.names = FALSE)
           
 # Cleanup
 rm(list = ls())
