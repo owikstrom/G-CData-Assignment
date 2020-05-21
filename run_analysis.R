@@ -27,15 +27,15 @@ cols <- grep("(mean|std)\\(",features$V2)
 x_reduced <- x_full[,cols]
 
 
-
 # Consolidate the tidy dataset with subject and activity data
 y_full$activity <-factor(y_full$V1, labels = labels$V2)
 tidydataset <- cbind(activity= y_full$activity, subject=subject_full$V1, x_reduced)
+write.csv(tidydataset, file='tidydataset.csv')
 
 
-# Cleanup
-list1 <- ls()
-list1 <- c(list1[list1 !='tidydataset'], 'list1')
-rm(list = list1)
-
+# Create and save the summary dataset
 sumdataset <- tidydataset %>% group_by(subject, activity) %>% summarise_all(list(mean))
+write.csv(tidydataset, file='summary.csv')
+          
+# Cleanup
+rm(list = ls())
