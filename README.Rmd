@@ -19,6 +19,12 @@ library(dplyr)
 I downloaded the files from the site, unzipped them and loaded the relevant .csv into memory
 
 ```{r download}
+# Download files
+url1 <- 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
+download.file(url1, basename(url1))
+filenames <- unzip(basename(url1), list=TRUE)
+
+# Read all necessary tables into memory
 x_test <- read.table("UCI HAR Dataset/test/x_test.txt")
 x_train <- read.table("UCI HAR Dataset/train/X_train.txt")
 labels <- read.table("UCI HAR Dataset/activity_labels.txt")
@@ -57,7 +63,7 @@ The finished file was then stored to a .csv file
 ```{r tidydata}
 y_full$activity <-factor(y_full$V1, labels = labels$V2)
 tidydataset <- cbind(activity= y_full$activity, subject=subject_full$V1, x_reduced)
-write.csv(tidydataset, file='tidydataset.csv', row.names = FALSE)
+write.table(tidydataset, file='tidydataset.txt', row.names = FALSE)
 ```
 
 #### Preparing the summary dataset
@@ -66,7 +72,7 @@ Finally I closed all open objects.
 
 ```{r summarydata}
 sumdataset <- tidydataset %>% group_by(subject, activity) %>% summarise_all(list(mean))
-write.csv(sumdataset, file='summary.csv', row.names = FALSE)
+write.table(sumdataset, file='summary.txt', row.names = FALSE)
           
 # Cleanup
 rm(list = ls())
